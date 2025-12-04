@@ -1,6 +1,10 @@
 import douch from '../Assets/images/douch.jpg';
 import wed from '../Assets/images/wed.jpg';
+<<<<<<< HEAD
 import glass from '../Assets/images/wed.jpg';
+=======
+import glass from '../Assets/images/view 2.jpg';
+>>>>>>> 61ee13c (Add admin panel)
 import shawries from '../Assets/images/shawries.jpg';
 import deco from '../Assets/images/deco.jpg';
 import view1 from '../Assets/images/View 1.jpg';

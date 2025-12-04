@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Keen Media House</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+
+        /* Login Page */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: #1a1a1a;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: #0f0f0f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .error-message {
+            background: rgba(234, 102, 102, 0.2);
+            color: #ea6666;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        /* Admin Dashboard */
+        .admin-container {
+            display: none;
+        }
+
+        .admin-container.active {
+            display: block;
+        }
+
+        /* Admin Nav */
+        .admin-nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .admin-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .admin-menu a:hover,
+        .admin-menu a.active {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1.5rem;
+            background: rgba(234, 102, 102, 0.2);
+            color: #ea6666;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(234, 102, 102, 0.3);
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 3rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: #b0b0b0;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+        }
+
+        /* Section Tabs */
+        .section-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            color: #b0b0b0;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table th {
+            background: #0f0f0f;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .data-table tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-confirmed {
+            background: rgba(102, 234, 102, 0.2);
+            color: #66ea66;
+        }
+
+        .status-completed {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn.delete {
+            background: rgba(234, 102, 102, 0.2);
+            color: #ea6666;
+        }
+
+        .action-btn.delete:hover {
+            background: rgba(234, 102, 102, 0.3);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #b0b0b0;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-menu {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                overflow-x: auto;
+            }
+
+            .section-tabs {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-logo">KEEN ADMIN</div>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Admin Login</h2>
+            
+            <div class="error-message" id="errorMessage">
+                Invalid username or password
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
+                Default: admin / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminDashboard">
+        <!-- Admin Navigation -->
+        <nav class="admin-nav">
+            <div class="admin-logo">KEEN ADMIN</div>
+            <ul class="admin-menu">
+                <li><a href="#dashboard" class="active" onclick="showSection('dashboard')">Dashboard</a></li>
+                <li><a href="#bookings" onclick="showSection('bookings')">Bookings</a></li>
+                <li><a href="#team" onclick="showSection('team')">Team</a></li>
+                <li><a href="#settings" onclick="showSection('settings')">Settings</a></li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back! Here's your business overview.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Pending Bookings</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Confirmed</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value">KES 850K</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                    </div>
+                </div>
+
+                <h2 style="margin-bottom: 1.5rem;">Recent Bookings</h2>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Package</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>Royal Package</td>
+                                <td>Dec 25, 2024</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="action-btn">View</button>
+                                    <button class="action-btn">Confirm</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>Premium Package</td>
+                                <td>Dec 20, 2024</td>
+                                <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                                <td>
+                                    <button class="action-btn">View</button>
+                                    <button class="action-btn">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mike Johnson</td>
+                                <td>Classic Package</td>
+                                <td>Dec 15, 2024</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>
+                                    <button class="action-btn">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bookings Section -->
+            <div class="content-section" id="bookings">
+                <div class="dashboard-header">
+                    <h1>All Bookings</h1>
+                    <p>Manage all client bookings and appointments.</p>
+                </div>
+
+                <div class="section-tabs">
+                    <button class="tab-btn active">All Bookings</button>
+                    <button class="tab-btn">Pending</button>
+                    <button class="tab-btn">Confirmed</button>
+                    <button class="tab-btn">Completed</button>
+                </div>
+
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Package</th>
+                                <th>Date</th>
+                                <th>Team Member</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#001</td>
+                                <td>John Doe</td>
+                                <td>john@email.com</td>
+                                <td>+254 712 345 678</td>
+                                <td>Royal Package</td>
+                                <td>Dec 25, 2024</td>
+                                <td>Felix Agwenye</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="action-btn">View</button>
+                                    <button class="action-btn delete">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="content-section" id="team">
+                <div class="dashboard-header">
+                    <h1>Team Management</h1>
+                    <p>Manage team members and their availability.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Total Team Members</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Available</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">On Assignment</div>
+                    </div>
+                </div>
+
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Specialization</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Meshack Kipchirchir</td>
+                                <td>Manager</td>
+                                <td>Operations & Client Relations</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Felix Agwenye</td>
+                                <td>Photographer</td>
+                                <td>Weddings & Events</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Edwin Koech</td>
+                                <td>Photographer</td>
+                                <td>Corporate & Lifestyle</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Meshack Mutai</td>
+                                <td>Videographer</td>
+                                <td>Cinematic Storytelling</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Brian Mely</td>
+                                <td>Videographer</td>
+                                <td>Dynamic Content</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Japheth Odhiambo</td>
+                                <td>Drone Pilot</td>
+                                <td>Aerial Photography</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Eugine</td>
+                                <td>Video Editor</td>
+                                <td>Post-Production</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bradley</td>
+                                <td>Sound Engineer</td>
+                                <td>Audio Quality</td>
+                                <td><span class="status-badge status-confirmed">Available</span></td>
+                                <td><button class="action-btn">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings">
+                <div class="dashboard-header">
+                    <h1>Settings</h1>
+                    <p>Manage your admin account and website settings.</p>
+                </div>
+
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚙️</div>
+                    <h2>Settings Coming Soon</h2>
+                    <p>This section is under development.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login Functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Simple authentication (replace with real backend)
+            if (username === 'admin' && password === 'admin123') {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('adminDashboard').classList.add('active');
+                errorMessage.classList.remove('active');
+            } else {
+                errorMessage.classList.add('active');
+            }
+        });
+
+        // Logout Functionality
+        function logout() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('adminDashboard').classList.remove('active');
+            document.getElementById('loginForm').reset();
+        }
+
+        // Section Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Update active menu item
+            document.querySelectorAll('.admin-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

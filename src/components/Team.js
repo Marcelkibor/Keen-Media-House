@@ -4,8 +4,13 @@ import Felix from "../Assets/images/felix.jpg";
 import Edwin from "../Assets/images/edwin.jpg";
 import Meshack from "../Assets/images/meshack.jpg";
 import Brian from "../Assets/images/brian.jpg";
+<<<<<<< HEAD
 import Japhe from "../Assets/images/Keen.jpg";
 import X from "../Assets/images/X.jpg";
+=======
+import Japheth from "../Assets/images/japheth.jpg";
+import Eugin from "../Assets/images/Eugin.jpg";
+>>>>>>> 61ee13c (Add admin panel)
 
 const Team = () => {
 

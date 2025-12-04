@@ -44,6 +44,10 @@ const Footer = () => {
         <div className="copyright">
             <p>&copy; 2025 Keen Media House. All rights reserved. | Designed with ❤️ for capturing moments</p>
         </div>
+<<<<<<< HEAD
+=======
+        <a href="admin.html">Admin Panel</a>
+>>>>>>> 61ee13c (Add admin panel)
     </footer>
     
   )
