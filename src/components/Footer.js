@@ -9,7 +9,7 @@ const Footer = () => {
                 <p>Professional photography and videography services in Nakuru, Kenya. Capturing your most precious moments with creativity and excellence.</p>
                 <div className="social-links">
                     <a href="https://www.instagram.com/chirchir273?igsh=MWI5bGozZHcyamppcA==" title="Instagram">📷</a>
-                    <a href="Message keen media house on WhatsApp. https://wa.me/254707431433" title="WhatsApp">📱</a>
+                    <a href="https://wa.me/254707431433" title="WhatsApp">📱</a>
                     <a href="https://www.tiktok.com/@keenmediahouseke?_r=1&_t=ZM-91f83pknUng" title="TikTok">🎵</a>
                     <a href="https://youtube.com/@keenmediahouse?si=0zVmEsMLueis9s4t" title="YouTube">▶️</a>
                 </div>
@@ -44,10 +44,8 @@ const Footer = () => {
         <div className="copyright">
             <p>&copy; 2025 Keen Media House. All rights reserved. | Designed with ❤️ for capturing moments</p>
         </div>
-<<<<<<< HEAD
-=======
-        <a href="admin.html">Admin Panel</a>
->>>>>>> 61ee13c (Add admin panel)
+
+        <Link to="/admin">Admin Panel</Link>
     </footer>
     
   )

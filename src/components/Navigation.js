@@ -65,6 +65,7 @@ export function Navigation() {
             <li><a href="#team">Our Team</a></li>
             <li><a href="#testimonials">Reviews</a></li>
             <li><a href="#booking">Book Now</a></li>
+            <li><a href="#admin"></a></li>
           </ul>
         </div>
       </nav>
