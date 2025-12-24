@@ -14,6 +14,7 @@ function App() {
     <div>
 <Navigation/>
 <LandingText/>
+<about/>
 <Services/>
 <Portfolio/>
 <Team/>
