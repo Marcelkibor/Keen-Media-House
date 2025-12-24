@@ -3,6 +3,7 @@ import Booking from './components/Booking';
 import Footer from './components/Footer';
 import LandingText from './components/LandingText';
 import { Navigation } from './components/Navigation';
+import about from'./components/about';
 import Portfolio from './components/Portfolio';
 import Services from './components/Services';
 import Team from './components/Team';
