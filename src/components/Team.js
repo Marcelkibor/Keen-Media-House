@@ -212,7 +212,7 @@ const Team = () => {
         <div className="team-card">
           <div className="team-image">
             <img
-              src={X}
+              src={Eugin}
               alt="Eugine"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
@@ -231,7 +231,7 @@ const Team = () => {
         <div className="team-card">
           <div className="team-image">
             <img
-              src={X}
+              src={Bradley}
               alt="Bradley"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
