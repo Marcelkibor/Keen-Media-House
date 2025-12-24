@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, Video, Users, Award, MapPin, Calendar, Image, Edit3, Smartphone, Briefcase } from 'lucide-react';
+import { Camera, Video, Users, Award, MapPin, Calendar, Edit3, Briefcase } from 'lucide-react';
 
 export default function AboutSection() {
   const [activeService, setActiveService] = useState(null);
@@ -87,8 +87,13 @@ export default function AboutSection() {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700 text-center hover:border-orange-500/50 transition-all duration-300">
-                <Icon className="w-8 h-8 text-orange-500 mx-auto mb-3" />
+              <div
+                key={index}
+                className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700 text-center hover:border-orange-500/50 transition-all duration-300"
+                role="figure"
+                aria-label={`${stat.number} ${stat.label}`}
+              >
+                <Icon className="w-8 h-8 text-orange-500 mx-auto mb-3" aria-hidden="true" />
                 <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mb-2">
                   {stat.number}
                 </div>
@@ -104,10 +109,10 @@ export default function AboutSection() {
           {/* Image Placeholder */}
           <div className="relative group order-2 md:order-1">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-red-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-            <div className="relative bg-slate-800 rounded-2xl p-8 border border-slate-700 h-96 flex items-center justify-center overflow-hidden">
-              <Camera className="w-32 h-32 text-slate-600" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-              <div className="absolute bottom-6 left-6 right-6">
+            <div className="relative bg-slate-800 rounded-2xl p-8 border border-slate-700 h-96 flex flex-col items-center justify-center overflow-hidden">
+              <Camera className="w-32 h-32 text-slate-600" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent pointer-events-none"></div>
+              <div className="absolute bottom-6 left-6 right-6 text-center">
                 <p className="text-white font-semibold text-lg">Capturing Life, Culture & Emotion</p>
                 <p className="text-slate-300 text-sm">Since 2020 • Eldoret, Kenya</p>
               </div>
@@ -133,10 +138,18 @@ export default function AboutSection() {
                 Proudly serving clients across Kenya
               </p>
               <div className="flex flex-wrap gap-4">
-                <button className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <button
+                  type="button"
+                  className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 transform hover:-translate-y-1"
+                  aria-label="View our portfolio"
+                >
                   View Portfolio
                 </button>
-                <button className="px-8 py-3 bg-slate-800 text-white font-semibold rounded-lg border border-slate-700 hover:bg-slate-700 hover:border-orange-500/50 transition-all duration-300">
+                <button
+                  type="button"
+                  className="px-8 py-3 bg-slate-800 text-white font-semibold rounded-lg border border-slate-700 hover:bg-slate-700 hover:border-orange-500/50 transition-all duration-300"
+                  aria-label="Contact Keen Media House"
+                >
                   Contact Us
                 </button>
               </div>
@@ -165,15 +178,24 @@ export default function AboutSection() {
                   }`}
                   onMouseEnter={() => setActiveService(index)}
                   onMouseLeave={() => setActiveService(null)}
+                  onClick={() => setActiveService(isActive ? null : index)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveService(isActive ? null : index);
+                    }
+                  }}
                 >
                   <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-white" />
+                    <Icon className="w-6 h-6 text-white" aria-hidden="true" />
                   </div>
                   <h4 className="text-xl font-semibold text-white mb-3">{service.title}</h4>
                   <ul className="space-y-2">
                     {service.items.map((item, idx) => (
                       <li key={idx} className="text-slate-400 text-sm flex items-start">
-                        <span className="text-orange-500 mr-2">•</span>
+                        <span className="text-orange-500 mr-2" aria-hidden="true">•</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -194,7 +216,11 @@ export default function AboutSection() {
             <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
               At Keen Media House, every project is handled with passion, creativity, and a commitment to excellence. Whether you're celebrating a milestone or elevating your brand, we ensure your story is captured beautifully and delivered flawlessly.
             </p>
-            <button className="px-10 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 shadow-xl">
+            <button
+              type="button"
+              className="px-10 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
+              aria-label="Partner with Keen Media House today"
+            >
               Partner With Us Today
             </button>
           </div>
